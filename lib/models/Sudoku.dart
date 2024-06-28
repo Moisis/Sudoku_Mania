@@ -3,11 +3,12 @@ import 'dart:math';
 class Sudoku {
   List<List<int>> _board = [];
   List<List<int>> _solvedBoard = [];
-  String difficulty = "easy";
+  String difficulty ="";
 
-  Sudoku() {
+  Sudoku({required this.difficulty}) {
     _board = List.generate(9, (i) => List.generate(9, (j) => 0));
     _solvedBoard = List.generate(9, (i) => List.generate(9, (j) => 0));
+
   }
 
   List<List<int>> get board => _board;
@@ -24,22 +25,24 @@ class Sudoku {
     // Medium: Remove 40 cells.
     // Hard: Remove  50 cells.
     // Expert: Remove  55 cells.
-
     switch (difficulty) {
-      case "easy":
+      case "Beginner":
+        cellsToRemove = 20;
+        break;
+      case "Easy":
         cellsToRemove = 30;
         break;
-      case "medium":
+      case "Medium":
         cellsToRemove = 40;
         break;
-      case "hard":
+      case "Hard":
         cellsToRemove = 50;
         break;
-      case "expert":
+      case "Expert":
         cellsToRemove = 55;
         break;
       default:
-        cellsToRemove = 30;
+        cellsToRemove = 20;
     }
 
     List<List<int>> positions = [];
@@ -158,7 +161,9 @@ class Sudoku {
 }
 
 void main() {
-  Sudoku sudoku = Sudoku();
+
+
+  Sudoku sudoku = Sudoku(difficulty: "easy");
 
   print("\nSolved Sudoku Board:\n");
   for (int i = 0; i < 9; i++) {
