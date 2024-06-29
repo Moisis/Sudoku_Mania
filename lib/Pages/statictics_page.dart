@@ -1,130 +1,116 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sudoku_mania/models/sudoku_statistic.dart';
 
-class StatsPage extends StatelessWidget {
+import '../components/SudokuStatisticCard.dart';
+
+class StatsPage extends StatefulWidget {
   const StatsPage({Key? key}) : super(key: key);
+
+  @override
+  _StatsPageState createState() => _StatsPageState();
+}
+
+class _StatsPageState extends State<StatsPage> {
+  List<SudokuStatistic> stats = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadStats();
+  }
+
+  Future<void> loadStats() async {
+    final prefs = await SharedPreferences.getInstance();
+    final List<String> savedStats = prefs.getStringList('game_stats') ?? [];
+
+    final Map<String, SudokuStatistic> statsMap = {
+      'Beginner': SudokuStatistic(difficulty: 'Beginner'),
+      'Easy': SudokuStatistic(difficulty: 'Easy'),
+      'Medium': SudokuStatistic(difficulty: 'Medium'),
+      'Hard': SudokuStatistic(difficulty: 'Hard'),
+      'Expert': SudokuStatistic(difficulty: 'Expert'),
+    };
+
+    for (var stat in savedStats) {
+      final parts = stat.split(':');
+      final key = parts[0];
+      final value = int.parse(parts[1]);
+
+      final difficulty = key.split('_')[0];
+      final statType = key.split('_')[2];
+
+      if (statType == 'played') {
+        statsMap[difficulty]!.gamesPlayed = value;
+      } else if (statType == 'won') {
+        statsMap[difficulty]!.gamesWon = value;
+      } else if (statType == 'lost') {
+        statsMap[difficulty]!.gamesLost = value;
+      } else if (statType == 'time') {
+        statsMap[difficulty]!.setBestTime(value);
+      }
+    }
+
+    statsMap.forEach((key, value) {
+      value.calculateWinRate();
+    });
+
+    setState(() {
+      stats = statsMap.values.toList();
+    });
+  }
+
+  Future<void> resetStats() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('game_stats');
+    loadStats();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Sudoku Stats'.toUpperCase() , style: TextStyle(
-          color: Colors.black,
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
+        title: Text(
+          'Stats'.toUpperCase(),
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        ),
+        actions: [
+          TextButton(
+            onPressed: resetStats,
+            child: Text(
+              'Reset',
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Game Statistics',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 20),
-              SudokuStatisticCard(
-                difficulty: 'Beginner',
-                gamesPlayed: 50, // Replace with actual data
-                gamesWon: 30, // Replace with actual data
-                winRate: '60%', // Replace with actual data
-                bestTime: '3:45', // Replace with actual data
-              ),
-              SudokuStatisticCard(
-                difficulty: 'Easy',
-                gamesPlayed: 100, // Replace with actual data
-                gamesWon: 70, // Replace with actual data
-                winRate: '70%', // Replace with actual data
-                bestTime: '6:12', // Replace with actual data
-              ),
-              SudokuStatisticCard(
-                difficulty: 'Medium',
-                gamesPlayed: 80, // Replace with actual data
-                gamesWon: 50, // Replace with actual data
-                winRate: '62.5%', // Replace with actual data
-                bestTime: '8:20', // Replace with actual data
-              ),
-              SudokuStatisticCard(
-                difficulty: 'Hard',
-                gamesPlayed: 60, // Replace with actual data
-                gamesWon: 40, // Replace with actual data
-                winRate: '66.67%', // Replace with actual data
-                bestTime: '10:15', // Replace with actual data
-              ),
-              SudokuStatisticCard(
-                difficulty: 'Expert',
-                gamesPlayed: 30, // Replace with actual data
-                gamesWon: 20, // Replace with actual data
-                winRate: '66.67%', // Replace with actual data
-                bestTime: '12:30', // Replace with actual data
-              ),
-            ],
+            children: stats.map((stat) {
+              return SudokuStatisticCard(
+                difficulty: stat.difficulty,
+                gamesPlayed: stat.gamesPlayed,
+                gamesWon: stat.gamesWon,
+                winRate: stat.winRate,
+                bestTime: stat.bestTime,
+              );
+            }).toList(),
           ),
         ),
       ),
     );
   }
-}
 
-
-class SudokuStatisticCard extends StatelessWidget {
-  final String difficulty;
-  final int gamesPlayed;
-  final int gamesWon;
-  final String winRate;
-  final String bestTime;
-
-  const SudokuStatisticCard({
-    Key? key,
-    required this.difficulty,
-    required this.gamesPlayed,
-    required this.gamesWon,
-    required this.winRate,
-    required this.bestTime,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              difficulty,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Games Played: $gamesPlayed'),
-                    Text('Games Won: $gamesWon'),
-                    Text('Win Rate: $winRate'),
-                    Text('Best Time: $bestTime'),
-                  ],
-                ),
-                // Add additional widgets or actions as needed
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 //Pages
 import 'package:sudoku_mania/Pages/home_page.dart';
 import 'package:sudoku_mania/Pages/game_page.dart';
-import 'package:sudoku_mania/Pages/rules_page.dart';
+import 'package:sudoku_mania/Pages/Copyright_Page.dart';
 import 'package:sudoku_mania/Pages/splash_screen.dart';
 
 import 'Pages/info_page.dart';
@@ -34,12 +34,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      initialRoute:  '/splash_page',
+      initialRoute:  '/home_page',
       routes: {
         '/splash_page': (context) => const SplashScreen(),
         '/home_page': (context) => const HomeScreen(),
         '/info_page': (context) => const InfoPage(),
-        '/rules_page': (context) => const RulesPage(),
+        '/rules_page': (context) =>  CopyrightPage(),
         '/stats_page': (context) => const StatsPage(),
       },
       onGenerateRoute: (settings) {

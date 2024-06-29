@@ -52,15 +52,18 @@ class _GamePageState extends State<GamePage> {
 
    List<List<bool>> highlightedCells = List.generate(9, (i) => List.filled(9, false, growable: false), growable: false);
 
+
+
    // !-----------Timer  Start -----------------!
   Timer? _timer;
   int _secondsElapsed = 0;
+  bool _isPaused = false;
 
   void startTimer() {
     // Check if the timer is already running
     if (_timer == null || !_timer!.isActive) {
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        if (mounted) { // Check if the widget is still in the tree
+        if (mounted && !_isPaused) { // Check if the widget is still in the tree and not paused
           setState(() {
             _secondsElapsed++;
           });
@@ -72,6 +75,15 @@ class _GamePageState extends State<GamePage> {
   void stopTimer() {
     _timer?.cancel();
     _timer = null; // Set _timer to null to indicate that the timer is not running
+    _isPaused = false; // Reset pause state
+  }
+
+  void pauseTimer() {
+    _isPaused = true; // Set paused state to true
+  }
+
+  void unpauseTimer() {
+    _isPaused = false; // Set paused state to false
   }
 
   String formatTime(int seconds) {
@@ -80,9 +92,8 @@ class _GamePageState extends State<GamePage> {
     return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
   }
 
+
   // !-----------Timer End -----------------!
-
-
   @override
    void didChangeDependencies() {
      super.didChangeDependencies();
@@ -135,6 +146,13 @@ class _GamePageState extends State<GamePage> {
      });
    }
 
+
+    // !-----------------------Restart Game Function -----------------------!
+   void _restartgame(){
+    _newGame() ;
+    isPaused = !isPaused;
+   }
+
    // !-----------------------Utils  Function -----------------------!
 
   void _onNumberSelected(index){
@@ -181,7 +199,6 @@ class _GamePageState extends State<GamePage> {
         }
       }
     }
-    print(isvalid);
     if (isvalid) {
       invalidRow1 = invalidCol1 = invalidRow2 = invalidCol2 = -1;
     }else{
@@ -190,6 +207,7 @@ class _GamePageState extends State<GamePage> {
     }
   }
 
+  // !-----------------------Highlight Occurrences Function -----------------------!
 
   void highlightOccurrences(int row, int col) {
     setState(() {
@@ -215,8 +233,8 @@ class _GamePageState extends State<GamePage> {
     });
   }
 
-
-  void removenumber(){
+  // !-----------------------Remove Number Function -----------------------!
+  void remove_number(){
     setState(() {
       if (!UserInputNumbers[rowSelected][colSelected]  && (rowSelected == -1 || colSelected == -1)) {
         return;
@@ -230,16 +248,13 @@ class _GamePageState extends State<GamePage> {
 
   // !-----------------------Pause Menu  -----------------------!
 
-
    void togglePause() {
      setState(() {
        isPaused = !isPaused;
      });
    }
 
-
-
-
+    // !-----------------------Hearts  -----------------------!
    void _Control_Hearts(int NumberOfHeartsLeft){
      setState(() {
         if(NumberOfHeartsLeft == 3){
@@ -267,33 +282,20 @@ class _GamePageState extends State<GamePage> {
    }
 
 
-   void _testfunction(){
-     print('test');
-     _showGameOverDialog();
-     // setState(() {
-     //   isHeartFilled2 = !isHeartFilled2;
-     // });
-    // _Control_Heart(3);
-    // _showGameOverDialog();
-   }
-
    // !-----------------------Game Over Screens  / Dialogs  -----------------------!
-
-  Future<void> saveScore(int score) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('score', score);
-  }
 
 
   void _showGameOverDialog() {
+    saveGameStats(difficulty, false , _secondsElapsed); // Save game stats to SharedPreferences
     showDialog(
+      barrierDismissible: false, // Set this to false to prevent dismissing by tapping outside
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          title: Row(
+          title: const Row(
             children: [
               Icon(Icons.error_outline, color: Colors.red),
               SizedBox(width: 10),
@@ -307,7 +309,7 @@ class _GamePageState extends State<GamePage> {
               ),
             ],
           ),
-          content: Text(
+          content: const Text(
             'Sorry, you lost the game. \nTry again!',
             style: TextStyle(fontSize: 18),
           ),
@@ -315,9 +317,10 @@ class _GamePageState extends State<GamePage> {
             TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 10, horizontal: 20),
               ),
-              child: Text(
+              child: const Text(
                 'Restart',
                 style: TextStyle(color: Colors.white),
               ),
@@ -330,14 +333,16 @@ class _GamePageState extends State<GamePage> {
             TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: Colors.grey,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 10, horizontal: 20),
               ),
-              child: Text(
+              child: const Text(
                 'Back to Main Menu',
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.popUntil(context, ModalRoute.withName('/home_page'));
+
                 //_backToMainMenu();
                 // Navigate back to the main menu
               },
@@ -347,16 +352,19 @@ class _GamePageState extends State<GamePage> {
       },
     );
   }
+  // !-----------------------Game Won Screens  / Dialogs  -----------------------!
 
   void _showGameWonDialog() {
+    saveGameStats(difficulty, true , _secondsElapsed); // Save game stats to SharedPreferences
     showDialog(
+      barrierDismissible: false, // Set this to false to prevent dismissing by tapping outside
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          title: Row(
+          title: const Row(
             children: [
               Icon(Icons.emoji_events, color: Colors.green),
               SizedBox(width: 10),
@@ -373,14 +381,14 @@ class _GamePageState extends State<GamePage> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              const Text(
                 'Great Job! You have successfully completed the Sudoku puzzle!',
                 style: TextStyle(fontSize: 18),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 'Time taken: ${formatTime(_secondsElapsed)}',
-                style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
               ),
             ],
           ),
@@ -388,9 +396,9 @@ class _GamePageState extends State<GamePage> {
             TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               ),
-              child: Text(
+              child: const Text(
                 'New Game',
                 style: TextStyle(color: Colors.white),
               ),
@@ -403,15 +411,14 @@ class _GamePageState extends State<GamePage> {
             TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: Colors.grey,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               ),
               child: const Text(
                 'Back to Main Menu',
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                Navigator.of(context).pop();
-                //_backToMainMenu();
+                Navigator.popUntil(context, ModalRoute.withName('/home_page'));
                 // Reset the game state and return to the main menu
               },
             ),
@@ -420,9 +427,49 @@ class _GamePageState extends State<GamePage> {
       },
     );
   }
+// !-----------------------Save Game Stats -----------------------!
+
+  void saveGameStats(String difficulty, bool gameWon, int gameTimeInSeconds) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final String statsKey = 'game_stats';
+
+    final List<String> savedStats = prefs.getStringList(statsKey) ?? [];
+
+    final Map<String, dynamic> stats = {};
+    for (var stat in savedStats) {
+      final parts = stat.split(':');
+      stats[parts[0]] = int.parse(parts[1]);
+    }
+
+    final String gamesPlayedKey = '${difficulty}_games_played';
+    final String gamesWonKey = '${difficulty}_games_won';
+    final String gamesLostKey = '${difficulty}_games_lost';
+    final String bestTimeKey = '${difficulty}_best_time';
+
+    stats[gamesPlayedKey] = (stats[gamesPlayedKey] ?? 0) + 1;
+    if (gameWon) {
+      stats[gamesWonKey] = (stats[gamesWonKey] ?? 0) + 1;
+    } else {
+      stats[gamesLostKey] = (stats[gamesLostKey] ?? 0) + 1;
+    }
+
+    int bestTime = stats[bestTimeKey] ?? gameTimeInSeconds;
+    if (gameWon && gameTimeInSeconds < bestTime) {
+      bestTime = gameTimeInSeconds;
+    }
+    stats[bestTimeKey] = bestTime;
+
+    final List<String> updatedStats = stats.entries.map((entry) => '${entry.key}:${entry.value}').toList();
+
+    await prefs.setStringList(statsKey, updatedStats);
+  }
+
+  // !-----------------------Confirmation Dialog -----------------------!
 
 
   Future<bool> _showConfirmationDialog(BuildContext context) async {
+    pauseTimer();
     return await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -431,7 +478,7 @@ class _GamePageState extends State<GamePage> {
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: Container(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.0),
             ),
@@ -445,7 +492,7 @@ class _GamePageState extends State<GamePage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 const Text(
                   'Do you really want to go back?',
                   textAlign: TextAlign.center,
@@ -453,13 +500,14 @@ class _GamePageState extends State<GamePage> {
                     fontSize: 18.0,
                   ),
                 ),
-                SizedBox(height: 30.0),
+                const SizedBox(height: 30.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop(false); // Return false to not pop
+                        unpauseTimer();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey,
@@ -525,7 +573,7 @@ class _GamePageState extends State<GamePage> {
           title: Row(
             children: [
                Text(difficulty,
-                style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold ),
+                style: const TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold ),
               ),
               const Spacer(), // This will take up all available space, pushing the hearts to the right
               Icon(
@@ -566,7 +614,7 @@ class _GamePageState extends State<GamePage> {
                           width: 40,
                           icon: const Icon(Icons.add, color: Colors.white, size: 20),
                           title: 'New Game',
-                          color: Colors.blueAccent,
+                          color:  const Color(0xFF60C8DD),
                           fontsize: 16,
                           onPress : _newGame,
                         ),
@@ -580,7 +628,7 @@ class _GamePageState extends State<GamePage> {
                           icon: const Icon(Icons.pause, color: Colors.white, size: 20),
                           title: formatTime(_secondsElapsed),
                           onPress : togglePause,
-                          color: Colors.blueAccent,
+                          color:  const Color(0xFF60C8DD),
                           fontsize: 16,
                         ),
                       ),
@@ -623,7 +671,7 @@ class _GamePageState extends State<GamePage> {
                                   ? Colors.lightBlueAccent // Selected box
                                   : highlightedCells[row][col]
                                   ? (row == rowSelected || col == colSelected)
-                                  ? Colors.lightBlue[100] // Selected row or column
+                                  ?  const Color(0x7CC8D8FF)//Colors.lightBlue[100] // Selected row or column
                                   : Colors.lightBlue[300] // Other occurrences
                                   : Colors.white, // Default color
                               border: Border(
@@ -653,22 +701,8 @@ class _GamePageState extends State<GamePage> {
                   // !------------------Number Pad -------------------!
                   NumberPad(
                       onNumberSelected: _onNumberSelected ,
-                      onClear: removenumber,
+                      onClear: remove_number,
                   ),
-
-                  // !------------------Test Button-------------------!
-                  // IC_button(
-                  //     height: 70,
-                  //     width: 200,
-                  //     title: "Test",
-                  //     onPress: _testfunction,
-                  //     icon: const Icon(
-                  //       Icons.add,
-                  //       color: Colors.white,
-                  //     ),
-                  //   color: Colors.blue,
-                  //   fontsize: 16,
-                  // ),
                   const Spacer(),
                 ],
               ),
@@ -678,13 +712,11 @@ class _GamePageState extends State<GamePage> {
             if (isPaused)
               PauseMenu(
                 onResume: togglePause,
-                onRestart: _newGame,
+                onRestart: _restartgame,
                 onReturnToMainMenu: () {
                   Navigator.of(context).pop();
-                  //_backToMainMenu();
                 },
               ),
-
           ],
         ),
       ),

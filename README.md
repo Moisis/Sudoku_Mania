@@ -1,16 +1,42 @@
-# sudoku_mania
+# Sudoku Mania
 
-A new Flutter project.
+Sudoku Mania is a delightful Sudoku puzzle game designed for players of all ages. It offers a range of difficulty levels to challenge both beginners and experienced Sudoku enthusiasts.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- **Multiple Difficulty Levels**: Play Sudoku puzzles ranging from Beginner to Expert.
+- **Interactive Gameplay**: Enjoy a user-friendly interface with intuitive controls.
+- **Timer and Statistics**: Track your progress with a built-in timer and game statistics.
+- **Pause and Resume**: Pause the game at any time and resume later.
+- **Restart**: restart puzzles as needed.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Color Reference
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+## Screenshots
+
+
+## Dependencies
+The app uses the following dependencies:
+
+* carousel_slider: https://pub.dev/packages/carousel_slider
+* lottie: https://pub.dev/packages/lottie
+* shared_preferences: https://pub.dev/packages/shared_preferences
+* url_launcher : https://pub.dev/packages/url_launcher
+
+
+## Acknowledgments
+- Flutter - UI toolkit by Google
+- carousel_slider - Flutter package for carousel sliders
+- curved_navigation_bar: A Flutter package for easy implementation of curved navigation bar.
+- lottie: A Flutter plugin to use the Firebase Core API
+- http: set of high-level functions and classes that make it easy to consume HTTP resources.
+- shared_preferences: Wraps platform-specific persistent storage for simple data
+
+
+
+## Author
+
+- [@Moisis](https://github.com/Moisis)

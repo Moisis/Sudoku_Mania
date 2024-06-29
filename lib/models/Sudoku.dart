@@ -27,7 +27,7 @@ class Sudoku {
     // Expert: Remove  55 cells.
     switch (difficulty) {
       case "Beginner":
-        cellsToRemove = 3;
+        cellsToRemove = 20;
         break;
       case "Easy":
         cellsToRemove = 30;
@@ -44,7 +44,6 @@ class Sudoku {
       default:
         cellsToRemove = 20;
     }
-
     List<List<int>> positions = [];
     for (int row = 0; row < 9; row++) {
       for (int col = 0; col < 9; col++) {

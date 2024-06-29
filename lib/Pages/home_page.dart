@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sudoku_mania/components/icon_button.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -38,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/icons/pastime.png', scale: 2,),
+            Image.asset('assets/icons/appicon.png', scale: 2,),
             const SizedBox(height: 20),
             Stack(
               children: [
@@ -88,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
             IC_button(
               title: "Start Game",
               icon: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 24.0),
-              color: const Color(0xFF232E7A),
+              color: const Color(0xFF60C8DD),
               width: 200.0,
               height: 60.0,
               fontsize: 20.0,
@@ -129,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 10),
                   // High Score Button
                   IconButton(
-                    icon: const Icon(Icons.book, size: 40),
+                    icon: const Icon(Icons.copyright , size: 40),
                     onPressed: () {
                       // Handle High Score button press
                       Navigator.pushNamed(context, "/rules_page");
