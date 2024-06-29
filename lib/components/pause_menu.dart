@@ -6,7 +6,7 @@ class PauseMenu extends StatelessWidget {
   final VoidCallback onRestart;
   final VoidCallback onReturnToMainMenu;
 
-  PauseMenu({
+  const PauseMenu({super.key,
     required this.onResume,
     required this.onRestart,
     required this.onReturnToMainMenu,
@@ -21,7 +21,7 @@ class PauseMenu extends StatelessWidget {
           color: Colors.black.withOpacity(0.8),
           child: Center(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
                 color: Colors.grey[800],
                 borderRadius: BorderRadius.circular(16),
@@ -29,7 +29,7 @@ class PauseMenu extends StatelessWidget {
                   BoxShadow(
                     color: Colors.black.withOpacity(0.4),
                     blurRadius: 10,
-                    offset: Offset(0, 5),
+                    offset: const Offset(0, 5),
                   ),
                 ],
               ),
@@ -37,7 +37,7 @@ class PauseMenu extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
+                  const Text(
                     'Paused',
                     style: TextStyle(
                       color: Colors.white,
@@ -45,56 +45,56 @@ class PauseMenu extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                       elevation: 3,
                     ),
                     onPressed: onResume,
-                    child: Text(
+                    child: const Text(
                       'Resume',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                       elevation: 3,
                     ),
                     onPressed: onRestart,
-                    child: Text(
+                    child: const Text(
                       'Restart',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                       elevation: 3,
                     ),
                     onPressed: onReturnToMainMenu,
-                    child: Text(
+                    child: const Text(
                       'Return to Main Menu',
                       textAlign: TextAlign.center, // Ensure text alignment is centered
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),

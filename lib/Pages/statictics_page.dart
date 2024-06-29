@@ -5,7 +5,7 @@ import 'package:sudoku_mania/models/sudoku_statistic.dart';
 import '../components/SudokuStatisticCard.dart';
 
 class StatsPage extends StatefulWidget {
-  const StatsPage({Key? key}) : super(key: key);
+  const StatsPage({super.key});
 
   @override
   _StatsPageState createState() => _StatsPageState();
@@ -82,7 +82,7 @@ class _StatsPageState extends State<StatsPage> {
         actions: [
           TextButton(
             onPressed: resetStats,
-            child: Text(
+            child: const Text(
               'Reset',
               style: TextStyle(
                 color: Colors.black87,

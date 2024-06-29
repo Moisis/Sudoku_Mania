@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     // Initialize animation controller
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3), // Adjust the duration as needed
+      duration: const Duration(seconds: 3), // Adjust the duration as needed
     );
 
     // Define the animation curve for fade-out
@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     // Define the animation for shifting the overlay image
     _shiftAnimation = Tween<Offset>(
       begin: Offset.zero,
-      end: Offset(0.0, -0.4), // Adjust the shift amount as needed (upward shift)
+      end: const Offset(0.0, -0.4), // Adjust the shift amount as needed (upward shift)
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Curves.easeOut,
@@ -84,7 +84,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             ),
             // Overlay image stacked on top with shifting animation
             AnimatedPositioned(
-              duration: Duration(seconds: 2), // Adjust the duration as needed
+              duration: const Duration(seconds: 2), // Adjust the duration as needed
               top: MediaQuery.of(context).size.height * 0.3,
               left: 0,
               right: 0,

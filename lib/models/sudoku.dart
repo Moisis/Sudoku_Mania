@@ -151,27 +151,4 @@ class Sudoku {
 
     return true;
   }
-
-  void _printBoard(List<List<int>> board) {
-    for (var row in board) {
-      print(row);
-    }
-  }
-}
-
-void main() {
-
-
-  Sudoku sudoku = Sudoku(difficulty: "easy");
-
-  print("\nSolved Sudoku Board:\n");
-  for (int i = 0; i < 9; i++) {
-    sudoku.generateSolvedPuzzle();
-    sudoku._printBoard(sudoku.solvedBoard);
-    print(" \n");
-  }
-
-  print("\nUnsolved Sudoku Board:\n");
-  sudoku.generateUnsolvedPuzzle();
-  sudoku._printBoard(sudoku.board);
 }

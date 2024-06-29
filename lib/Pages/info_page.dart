@@ -3,13 +3,13 @@ import 'package:url_launcher/url_launcher.dart';
 
 
 class InfoPage extends StatelessWidget {
-  const InfoPage({Key? key}) : super(key: key);
+  const InfoPage({super.key});
 
   Future<void> _launchUrl(String Url) async {
-    final Uri _url = Uri.parse(Url);
+    final Uri url = Uri.parse(Url);
 
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
     }
   }
 

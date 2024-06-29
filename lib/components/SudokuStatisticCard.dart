@@ -9,13 +9,13 @@ class SudokuStatisticCard extends StatelessWidget {
   final String bestTime;
 
   const SudokuStatisticCard({
-    Key? key,
+    super.key,
     required this.difficulty,
     required this.gamesPlayed,
     required this.gamesWon,
     required this.winRate,
     required this.bestTime,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

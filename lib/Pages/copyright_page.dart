@@ -8,11 +8,7 @@ class CopyrightPage extends StatelessWidget {
   final Uri _urlFlutter = Uri.parse('https://flutter.dev');
   final Uri _urllauncher = Uri.parse('https://pub.dev/packages/url_launcher');
   final Uri _urlcarousel_slider = Uri.parse('https://pub.dev/packages/carousel_slider');
-  final Uri _urlSoundSnap = Uri.parse('https://soundsnap.com');
-
-  final Uri _urlFirebase = Uri.parse('https://firebase.google.com');
-  final Uri _urlBloc = Uri.parse('https://bloclibrary.dev');
-
+  final Uri _urlsharedPreferences = Uri.parse('https://pub.dev/packages/shared_preferences');
 
   Future<void> _launchURL(Uri url) async {
     if (!await launchUrl(url)) {
@@ -25,7 +21,7 @@ class CopyrightPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Copyright Information'),
+        title: const Text('Copyright Information'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -33,78 +29,78 @@ class CopyrightPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 '© 2024 Miso Studio',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 16),
-              Text(
+              const SizedBox(height: 16),
+              const Text(
                 'All rights reserved.',
                 style: TextStyle(fontSize: 16),
               ),
-              SizedBox(height: 16),
-              Text(
+              const SizedBox(height: 16),
+              const Text(
                 'This game and all its contents, including but not limited to text, graphics, logos, icons, images, audio clips, digital downloads, and software, are the property of Your Game Studio and are protected by international copyright laws.',
                 style: TextStyle(fontSize: 16),
               ),
 
-              SizedBox(height: 16),
-              Text(
+              const SizedBox(height: 16),
+              const Text(
                 'Contributing Assets:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 16),
-              Text(
+              const SizedBox(height: 16),
+              const Text(
                 'Graphics:',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               GestureDetector(
                 onTap: () => _launchURL(_urlappicon),
-                child: Text(
+                child: const Text(
                   '• Sudoku (Pastime) - App Icon ',
                   style: TextStyle(fontSize: 16, color: Colors.blue),
                 ),
               ),
               GestureDetector(
                 onTap: () => _launchURL(_urlbackground),
-                child: Text(
+                child: const Text(
                   '• Blob Page (Haikei)  - Background Art',
                   style: TextStyle(fontSize: 16, color: Colors.blue),
                 ),
               ),
-              SizedBox(height: 16),
-              Text(
+              const SizedBox(height: 16),
+              const Text(
                 'Code Libraries:',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               GestureDetector(
                 onTap: () => _launchURL(_urlFlutter),
-                child: Text(
+                child: const Text(
                   '• Flutter - UI Framework',
                   style: TextStyle(fontSize: 16, color: Colors.blue),
                 ),
               ),
               GestureDetector(
                 onTap: () => _launchURL(_urllauncher),
-                child: Text(
+                child: const Text(
                   '• Url Launcher  - Responsile of launching URL',
                   style: TextStyle(fontSize: 16, color: Colors.blue),
                 ),
               ),
               GestureDetector(
                 onTap: () => _launchURL(_urlcarousel_slider),
-                child: Text(
+                child: const Text(
                   '• Carousel Slider   - A carousel slider widget',
                   style: TextStyle(fontSize: 16, color: Colors.blue),
                 ),
               ),
-              // GestureDetector(
-              //   onTap: () => _launchURL(_urlBloc),
-              //   child: Text(
-              //     '• Shared_preferences - State Management',
-              //     style: TextStyle(fontSize: 16, color: Colors.blue),
-              //   ),
-              // ),
+              GestureDetector(
+                onTap: () => _launchURL(_urlsharedPreferences),
+                child: const Text(
+                  '• Shared Preferences    -  platform-specific persistent storage  ',
+                  style: TextStyle(fontSize: 16, color: Colors.blue),
+                ),
+              ),
             ],
           ),
         ),

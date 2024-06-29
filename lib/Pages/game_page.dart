@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/num_pad.dart';
-import 'package:sudoku_mania/models/Sudoku.dart';
+import 'package:sudoku_mania/models/sudoku.dart';
 
 import '../components/icon_button.dart';
 import '../components/pause_menu.dart';

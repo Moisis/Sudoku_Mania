@@ -14,7 +14,7 @@ class NumberPad extends StatelessWidget {
 
         return GridView.builder(
           shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 5,
             childAspectRatio: 1,
             crossAxisSpacing: 5,
@@ -51,7 +51,7 @@ class NumberPad extends StatelessWidget {
               padding: EdgeInsets.all(buttonSize * 0.05), // 5% of button size
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFE8EEFA),
+                  backgroundColor: const Color(0xFFE8EEFA),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
