@@ -129,6 +129,10 @@ class _GamePageState extends State<GamePage> {
        highlightedCells = List.generate(9, (i) => List.filled(9, false, growable: false), growable: false);
 
 
+       // Reset the state of the hearts
+       NumberOfHeartsLeft = 3;
+      _Control_Hearts(NumberOfHeartsLeft);
+
        var sudoku = Sudoku(difficulty: difficulty );
 
        sudoku.generateSolvedPuzzle();
