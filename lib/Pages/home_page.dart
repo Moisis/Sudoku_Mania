@@ -26,7 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        // ##TODO ADD CONST FILE FOR TEXT STYLES
         titleTextStyle: const TextStyle(
           color: Colors.black,
           fontSize: 24,
@@ -43,12 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
             Stack(
               children: [
                 CarouselSlider(
-                  items: textList.map((item) => Container(
-                    child: Center(
-                      child: Text(
-                        item,
-                        style: const TextStyle(fontSize: 24.0),
-                      ),
+                  items: textList.map((item) => Center(
+                    child: Text(
+                      item,
+                      style: const TextStyle(fontSize: 24.0),
                     ),
                   )).toList(),
                   carouselController: _controller,
@@ -57,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     enlargeCenterPage: true,
                     aspectRatio: 16 / 9,
                     enableInfiniteScroll: true,
-                    autoPlayAnimationDuration: Duration(milliseconds: 800),
                     viewportFraction: 0.8,
                     onPageChanged: (index, reason) {
                       setState(() {
@@ -90,7 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
             IC_button(
                 title: "Start Game",
                 icon: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 24.0),
-                color: Color(0xFF60C8DD),
+                color: Color(0xFF232E7A),
+                width: 200.0,
+                height: 60.0,
                 fontsize: 20.0,
                 onPress: () {
                   Navigator.pushNamed(

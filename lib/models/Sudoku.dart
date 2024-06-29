@@ -27,7 +27,7 @@ class Sudoku {
     // Expert: Remove  55 cells.
     switch (difficulty) {
       case "Beginner":
-        cellsToRemove = 20;
+        cellsToRemove = 3;
         break;
       case "Easy":
         cellsToRemove = 30;

@@ -6,28 +6,34 @@ class IC_button extends StatelessWidget {
   final Icon icon;
   final Color color;
   final double fontsize ;
+  final double width;
+  final double height;
 
 
-  IC_button({required this.title, required this.onPress, required this.icon, required this.color, required this.fontsize});
+  IC_button({required this.title, required this.onPress, required this.icon, required this.color, required this.fontsize, required this.width, required this.height});
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      icon: icon,
-      label: Text(
-        title,
-        style: TextStyle(
-          fontSize: fontsize,
-          color: Colors.white,
+    return Container(
+      width: width,
+       height: height,
+      child: ElevatedButton.icon(
+        icon: icon,
+        label: Text(
+          title,
+          style: TextStyle(
+            fontSize: fontsize,
+            color: Colors.white,
+          ),
         ),
-      ),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
+        onPressed: onPress,
       ),
-      onPressed: onPress,
     );
   }
 }
