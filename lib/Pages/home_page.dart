@@ -1,10 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sudoku_mania/components/icon_button.dart';
 
-
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -83,20 +84,63 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             const SizedBox(height: 20),
+            // Start Game Button
             IC_button(
-                title: "Start Game",
-                icon: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 24.0),
-                color: Color(0xFF232E7A),
-                width: 200.0,
-                height: 60.0,
-                fontsize: 20.0,
-                onPress: () {
-                  Navigator.pushNamed(
-                    context,
-                    "/game_page",
-                    arguments: { 'difficulty' : textList[_current].toString() },
-                  );
-                },),
+              title: "Start Game",
+              icon: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 24.0),
+              color: const Color(0xFF232E7A),
+              width: 200.0,
+              height: 60.0,
+              fontsize: 20.0,
+              onPress: () {
+                Navigator.pushNamed(
+                  context,
+                  "/game_page",
+                  arguments: {'difficulty': textList[_current]},
+                );
+              },
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1, // 10% of screen
+            ),
+            // Info Button
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Chart Button
+                  IconButton(
+                    icon: const Icon(Icons.bar_chart , size: 40,),
+                    onPressed: () {
+                      // Handle Info button press
+                      Navigator.pushNamed(context, "/stats_page");
+
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  // Info Button
+                  IconButton(
+                    icon: const Icon(Icons.info, size: 40),
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/info_page");
+                    },
+                  ),
+
+                  const SizedBox(height: 10),
+                  // High Score Button
+                  IconButton(
+                    icon: const Icon(Icons.book, size: 40),
+                    onPressed: () {
+                      // Handle High Score button press
+                      Navigator.pushNamed(context, "/rules_page");
+
+                    },
+                  ),
+
+                ],
+              ),
+            ),
+
           ],
         ),
       ),
